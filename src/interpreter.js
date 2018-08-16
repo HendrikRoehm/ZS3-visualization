@@ -54,6 +54,4 @@ function coeffFrom(input) {
   return visitor.visit(tree);
 }
 
-console.log(coeffFrom("-54e+st+st-st"));
-
 module.exports = coeffFrom;

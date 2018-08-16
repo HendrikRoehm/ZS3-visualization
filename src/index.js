@@ -1,5 +1,5 @@
-import parseInput from './interpreter';
 import Lattice from './lattice';
+import coeffFrom from './interpreter';
 
 window.Lattice = Lattice;
-console.log(parseInput("123*e"));
+window.coeffFrom = coeffFrom;
