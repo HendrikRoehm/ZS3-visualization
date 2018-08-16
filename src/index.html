@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>ZS3 lattice operation</title>
+  <style>
+  canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  </style>
+</head>
+<body>
+  <h1>Interactive visualization of ZS3 operation on lattice</h1>
+  <canvas id="lattice" width="500" height="500"></canvas>
+  <p>Input</p>
+  <h1>Description</h1>
+  <p>To be done</p>
+  <script src="../src/lattice.js"></script>
+  <script>
+    var canvas = document.getElementById("lattice");
+    var textContainer = document.getElementById("latticeText");
+    var lattice = new Lattice(canvas, {
+      gap: 30,
+      animationSpeed: 1
+    });
+  </script>
+</body>
+</html>
