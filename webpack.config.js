@@ -7,6 +7,6 @@ module.exports = {
     filename: 'bundle.js'
   },
   node: {
-    fs: 'empty'
+    module: "empty", net: "empty", fs: "empty"
   }
 };
