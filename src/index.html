@@ -12,8 +12,10 @@
 </head>
 <body>
   <h1>Interactive visualization of ZS3 operation on lattice</h1>
+  <p>Brought to you by Hendrik Roehm and Leo Margolis.</p>
   <canvas id="lattice" width="500" height="500"></canvas>
-  <p>Input</p>
+  <p>Type in an element of ZS3 (such as e+t-tt-1*s+1*stt) and press enter or click operate.</p>
+  <p><input tpye="text" style="width: 300px"><input type="button" value="operate" onclick="operate();"></p>
   <h1>Description</h1>
   <p>To be done</p>
   <script src="../src/lattice.js"></script>
@@ -24,6 +26,10 @@
       gap: 30,
       animationSpeed: 1
     });
+
+    function operate() {
+      lattice.operateWith({e: 1, t: 1, tt: -1, s: -1, st: 0, stt: 1});
+    }
   </script>
 </body>
 </html>
