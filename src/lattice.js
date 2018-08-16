@@ -8,7 +8,7 @@
  *   gap: Distance between points
  *   animationSpeed: speed of the transformation animation
  */
-function Lattice(canvas, options) {
+export default function Lattice(canvas, options) {
   options = options || {};
   var context = canvas.getContext('2d');            
   var width = canvas.width;
