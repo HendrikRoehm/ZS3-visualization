@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-webpack": "node_modules/.bin/webpack",
-    "build-interpreter": "antlr4 -Dlanguage=JavaScript src/interpreter/ZS3Element.g4 -no-listener -visitor"
+    "build-interpreter": "antlr4 -Dlanguage=JavaScript src/interpreter/ZS3Element.g4 -no-listener -visitor",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [
     "ZS3",
