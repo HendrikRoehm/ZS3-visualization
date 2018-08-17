@@ -16,9 +16,12 @@
   <canvas id="lattice" width="500" height="500"></canvas>
   <p>Type in an element of ZS3 (such as e+t-tt-2s+2stt) and press enter.</p>
   <p>
-    <input type="text" id="input" style="width: 300px">
-    <input type="button" value="operate" onclick="operate();">
-    <input type="button" value="reset" onclick="reset();">
+    <div>
+      <input type="text" id="input" style="width: 300px">
+      <input type="button" value="operate" onclick="operate();">
+      <input type="button" value="reset" onclick="reset();">
+    </div>
+    <div id="error"></div>
   </p>
   <p>
     <div>History:</div>
@@ -32,6 +35,7 @@
     var textContainer = document.getElementById("latticeText");
     var inputContainer = document.getElementById("input");
     var historyContainer = document.getElementById("history");
+    var errorContainer = document.getElementById("error");
     var lattice = new Lattice(canvas, {
       gap: 30,
       pointsPerDirection: 50,
@@ -63,11 +67,25 @@
     }
 
     function operate() {
+      errorContainer.innerText = "";
       var input = inputContainer.value;
-      var coeff = coeffFrom(input);
-      historyAdd(coeff);
-      lattice.operateWith(coeff);
-      inputContainer.value = "";
+      if (input === "") {
+        return;
+      }
+      var parsedInput = coeffFrom(input);
+      var coeff = parsedInput.coeff;
+      var errors = parsedInput.errors;
+      if (errors && errors.length > 0) {
+        errors.forEach(function (error) {
+          var entry = document.createElement("div");
+          entry.innerText = error;
+          errorContainer.appendChild(entry);
+        })
+      } else {
+        historyAdd(coeff);
+        lattice.operateWith(coeff);
+        inputContainer.value = "";
+      }
     }
 
     function reset() {
