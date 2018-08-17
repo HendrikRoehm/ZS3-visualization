@@ -43,34 +43,36 @@ export default function Lattice(canvas, options) {
   var cancelAnimationFrame = window.cancelAnimationFrame
     || window.mozCancelAnimationFrame;
 
-  // initialize points
-  for (var i=-pointsPerDirection/2; i<pointsPerDirection/2; i++) {
-    for (var j=-pointsPerDirection/2; j<pointsPerDirection/2; j++) {
-      var isCenter = i == 0 && j == 0;
-      var x = (i+(j % 2)/2)*gap + center.x;
-      var y = Math.sqrt(3)/2*j*gap + center.y;
-      var size = isCenter ? 6 : 4;
-      var fill = "black";
-      var edge = false;
-      if (j == -2 && i == 0) {
-        fill = "red";
-        edge = true;
-      } else if (j == 1 && i == -2) {
-        fill = "green";
-        edge = true;
-      } else if (j == 1 && i == 1) {
-        fill = "blue";
-        edge = true;
+  function initializePoints() {
+    points = [];
+    for (var i=-pointsPerDirection/2; i<pointsPerDirection/2; i++) {
+      for (var j=-pointsPerDirection/2; j<pointsPerDirection/2; j++) {
+        var isCenter = i == 0 && j == 0;
+        var x = (i+(j % 2)/2)*gap + center.x;
+        var y = Math.sqrt(3)/2*j*gap + center.y;
+        var size = isCenter ? 6 : 4;
+        var fill = "black";
+        var edge = false;
+        if (j == -2 && i == 0) {
+          fill = "red";
+          edge = true;
+        } else if (j == 1 && i == -2) {
+          fill = "green";
+          edge = true;
+        } else if (j == 1 && i == 1) {
+          fill = "blue";
+          edge = true;
+        }
+        points.push({
+          xOld: x,
+          yOld: y,
+          x: x,
+          y: y,
+          size: size,
+          edge: edge,
+          fill: fill
+        });
       }
-      points.push({
-        xOld: x,
-        yOld: y,
-        x: x,
-        y: y,
-        size: size,
-        edge: edge,
-        fill: fill
-      });
     }
   }
 
@@ -165,6 +167,11 @@ export default function Lattice(canvas, options) {
     animationFrame();
   }
 
-  // initial rendering
-  render(1);
+  this.reset = function() {
+    initializePoints();
+    render(1);
+  }
+
+  // initialization
+  this.reset();
 }
