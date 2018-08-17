@@ -14,7 +14,7 @@
   <h1>Interactive visualization of ZS3 operation on lattice</h1>
   <p>Brought to you by Hendrik Roehm and Leo Margolis. Code available at ..., contributions are welcome.</p>
   <canvas id="lattice" width="500" height="500"></canvas>
-  <p>Type in an element of ZS3 (such as e+t-tt-1*s+1*stt) and click operate.</p>
+  <p>Type in an element of ZS3 (such as e+t-tt-2s+2stt) and press enter.</p>
   <p>
     <input type="text" id="input" style="width: 300px">
     <input type="button" value="operate" onclick="operate();">
@@ -30,6 +30,7 @@
   <script>
     var canvas = document.getElementById("lattice");
     var textContainer = document.getElementById("latticeText");
+    var inputContainer = document.getElementById("input");
     var historyContainer = document.getElementById("history");
     var lattice = new Lattice(canvas, {
       gap: 30,
@@ -62,16 +63,24 @@
     }
 
     function operate() {
-      var input = document.getElementById("input").value;
+      var input = inputContainer.value;
       var coeff = coeffFrom(input);
       historyAdd(coeff);
       lattice.operateWith(coeff);
+      inputContainer.value = "";
     }
 
     function reset() {
       lattice.reset();
       historyContainer.innerHTML = "";
     }
+
+    inputContainer.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        operate();
+      }
+    });
   </script>
 </body>
 </html>
