@@ -20,27 +20,57 @@
     <input type="button" value="operate" onclick="operate();">
     <input type="button" value="reset" onclick="reset();">
   </p>
+  <p>
+    <div>History:</div>
+    <ul id="history"></ul>
+  </p>
   <h1>Description</h1>
   <p>To be done</p>
   <script src="bundle.js"></script>
   <script>
     var canvas = document.getElementById("lattice");
     var textContainer = document.getElementById("latticeText");
+    var historyContainer = document.getElementById("history");
     var lattice = new Lattice(canvas, {
       gap: 30,
       pointsPerDirection: 50,
       animationSpeed: 1
     });
 
+    function historyAdd(coeff) {
+      var text = "";
+      Object.keys(coeff).forEach(function (basis) {
+        var factor = coeff[basis];
+        if (!factor) {
+          return;
+        }
+
+        var factorAbs = Math.abs(factor);
+        var factorText = factorAbs === 1 ? "" : factorAbs;
+        var sign = factor > 0 ? " + " : " - ";
+        text += sign + factorText + basis;
+      })
+      if (text === "") {
+        text = "0e";
+      } else if (text.slice(0, 3) === " + ") {
+        text = text.slice(3);
+      }
+
+      var entry = document.createElement("li");
+      entry.innerText = text;
+      historyContainer.appendChild(entry);
+    }
+
     function operate() {
       var input = document.getElementById("input").value;
       var coeff = coeffFrom(input);
-      console.log(coeff);
+      historyAdd(coeff);
       lattice.operateWith(coeff);
     }
 
     function reset() {
       lattice.reset();
+      historyContainer.innerHTML = "";
     }
   </script>
 </body>
