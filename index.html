@@ -12,10 +12,14 @@
 </head>
 <body>
   <h1>Interactive visualization of ZS3 operation on lattice</h1>
-  <p>Brought to you by Hendrik Roehm and Leo Margolis.</p>
+  <p>Brought to you by Hendrik Roehm and Leo Margolis. Code available at ..., contributions are welcome.</p>
   <canvas id="lattice" width="500" height="500"></canvas>
   <p>Type in an element of ZS3 (such as e+t-tt-1*s+1*stt) and click operate.</p>
-  <p><input type="text" id="input" style="width: 300px"><input type="button" value="operate" onclick="operate();"></p>
+  <p>
+    <input type="text" id="input" style="width: 300px">
+    <input type="button" value="operate" onclick="operate();">
+    <input type="button" value="reset" onclick="reset();">
+  </p>
   <h1>Description</h1>
   <p>To be done</p>
   <script src="bundle.js"></script>
@@ -33,6 +37,10 @@
       var coeff = coeffFrom(input);
       console.log(coeff);
       lattice.operateWith(coeff);
+    }
+
+    function reset() {
+      lattice.reset();
     }
   </script>
 </body>
