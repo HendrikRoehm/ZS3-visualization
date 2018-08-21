@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>ZS3 lattice operation</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  <script src="bundle.js"></script>
   <style>
     canvas {
       -moz-user-select: none;
@@ -18,16 +20,16 @@
   </style>
 </head>
 <body>
-  <h1>Interactive visualization of the $\mathbb{Z}S_3$-action on the natural lattice</h1>
+  <h1>Interactive visualization of the \(\mathbb{Z}S_3\)-action on the natural lattice</h1>
   <p>Brought to you by Hendrik Roehm and Leo Margolis. Code available at <a href="https://github.com/HendrikRoehm/ZS3-visualization">github</a>, contributions are welcome.</p>
-  <p>The symmetric group $S_3$ acting on three elements is the symmetry group of the equilateral triangle, fixing the center of this triangle. Extending this action linearly on the integral group ring $\mathbb{Z}S_3$ we obtain an action on the hexagonal lattice spanned by this triangle. This description was used in <a href = "http://www.math.ualberta.ca/people/Faculty/Sehgal/publications/086.pdf">an article by Marciniak and Sehgal</a> to describe the unit group of $\mathbb{Z}S_3$ explicitly. See also <a href="http://www.igt.uni-stuttgart.de/LstDiffgeo/Hertweck/preprints/ZS3_MaSe.pdf">an article of Hertweck</a> where the same is described and illustrated in more detail.</p>
+  <p>The symmetric group \(S_3\) acting on three elements is the symmetry group of the equilateral triangle, fixing the center of this triangle. Extending this action linearly on the integral group ring \(\mathbb{Z}S_3\) we obtain an action on the hexagonal lattice spanned by this triangle. This description was used in <a href = "http://www.math.ualberta.ca/people/Faculty/Sehgal/publications/086.pdf">an article by Marciniak and Sehgal</a> to describe the unit group of \(\mathbb{Z}S_3\) explicitly. See also <a href="http://www.igt.uni-stuttgart.de/LstDiffgeo/Hertweck/preprints/ZS3_MaSe.pdf">an article of Hertweck</a> where the same is described and illustrated in more detail.</p>
   <canvas id="lattice" width="500" height="500"></canvas>
   <h3>Input</h3>
   <p>
     <b>Notation:</b> Let the blue corner correspond to 1, the green to 2 and the red to 3. Then we denote e = id, s = (1,2), t = (1,2,3), tt = (1,3,2), st = (1,3), stt = (2,3).
   </p>
   <p>
-    Type in an element of $\mathbb{Z}S_3$ and press enter.
+    Type in an element of \(\mathbb{Z}S_3\) and press enter.
   </p>
   <p>
     <div>
@@ -47,7 +49,6 @@
 
   <h1>Description</h1>
   <p>To be done</p>
-  <script src="bundle.js"></script>
   <script>
     var canvas = document.getElementById("lattice");
     var textContainer = document.getElementById("latticeText");
