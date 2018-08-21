@@ -10,6 +10,7 @@
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [
+    "integral group ring",	
     "ZS3",
     "lattice",
     "group-theorie"
