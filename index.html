@@ -11,8 +11,10 @@
   </style>
 </head>
 <body>
-  <h1>Interactive visualization of ZS3 operation on lattice</h1>
+  <h1>Interactive visualization of the $\mathbb{Z}S_3$-action on the natural lattice</h1>
   <p>Brought to you by Hendrik Roehm and Leo Margolis. Code available at <a href="https://github.com/HendrikRoehm/ZS3-visualization">github</a>, contributions are welcome.</p>
+  <p> The symmetric group $S_3$ acting on three elements is the symmetry group of the equilateral triangle, fixing the center of this triangle. Extending this action lineraly on the integral group ring $\mathbb{Z}S_3$ we obtain an action on the hexagonal lattice spanned by this triangle. This discription was used in <a href = "http://www.math.ualberta.ca/people/Faculty/Sehgal/publications/086.pdf"> an article by Marciniak and Sehgal </a> to describe the unit group of $\mathbb{Z}S_3$ explicitly. See also <a href="http://www.igt.uni-stuttgart.de/LstDiffgeo/Hertweck/preprints/ZS3_MaSe.pdf"> an article of Hertweck </a> where the same is described and illustrated in more detail.</p>	
+
   <canvas id="lattice" width="500" height="500"></canvas>
   <p>Type in an element of ZS3 (such as e+t-tt-2s+2stt) and press enter.</p>
   <p>
@@ -23,10 +25,19 @@
     </div>
     <div id="error"></div>
   </p>
+Notation: Let the blue corner correspond to 1, the green to 2 and the red to 3. Then we denote e = id, s = (1,2), t = (1,2,3), tt = (1,3,2), st = (1,3), stt = (2,3).
+  <p>
+    <div>Options: </div>
+    The options are there anyway. So why not let the user adjust them?
+  </p>
   <p>
     <div>History:</div>
     <ul id="history"></ul>
   </p>
+
+<h1> Examples </h1>
+<p> Here we might put some preprogrammed examples with buttons. Let's do one for starters and the rest we can fill by adjusting. They might also look good to the right of the animation.</p>
+
   <h1>Description</h1>
   <p>To be done</p>
   <script src="bundle.js"></script>
