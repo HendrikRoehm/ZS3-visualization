@@ -1,6 +1,6 @@
 {
   "name": "zs3-visualization",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Visualization of the ZS3 operation on a lattice",
   "main": "src/lattice.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [
-    "integral group ring",	
+    "integral group ring",
     "ZS3",
     "lattice",
     "group-theorie"
