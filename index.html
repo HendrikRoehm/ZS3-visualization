@@ -17,16 +17,26 @@
       margin-right: auto;
       display: block;
     }
+
+    #history li {
+      float: left;
+      margin-left: 3em;
+    }
+
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
   </style>
 </head>
 <body>
   <h1>Interactive visualization of the \(\mathbb{Z}S_3\)-action on the natural lattice</h1>
   <p>Brought to you by Hendrik Roehm and Leo Margolis. Code available at <a href="https://github.com/HendrikRoehm/ZS3-visualization">github</a>, contributions are welcome.</p>
-  <p>The symmetric group \(S_3\) acting on three elements is the symmetry group of the equilateral triangle, fixing the center of this triangle. Extending this action linearly on the integral group ring \(\mathbb{Z}S_3\) we obtain an action on the hexagonal lattice spanned by this triangle. This description was used in <a href = "http://www.math.ualberta.ca/people/Faculty/Sehgal/publications/086.pdf">an article by Marciniak and Sehgal</a> to describe the unit group of \(\mathbb{Z}S_3\) explicitly. See also <a href="http://www.igt.uni-stuttgart.de/LstDiffgeo/Hertweck/preprints/ZS3_MaSe.pdf">an article of Hertweck</a> where the same is described and illustrated in more detail.</p>
   <canvas id="lattice" width="500" height="500"></canvas>
   <h3>Input</h3>
   <p>
-    <b>Notation:</b> Let the blue corner correspond to 1, the green to 2 and the red to 3. Then we denote e = id, s = (1,2), t = (1,2,3), tt = (1,3,2), st = (1,3), stt = (2,3).
+    <b>Notation:</b> Let the blue corner correspond to 1, the green to 2 and the red to 3. Then we denote \(e = id\), \(s = (1,2)\), \(t = (1,2,3)\), \(tt = (1,3,2)\), \(st = (1,3)\) and \(stt = (2,3)\).
   </p>
   <p>
     Type in an element of \(\mathbb{Z}S_3\) and press enter.
@@ -41,14 +51,18 @@
   </p>
   <h3>Examples</h3>
   <ul>
-    <li><input type="button" value="t" onclick="operate(this.value);"></li>
-    <li><input type="button" value="e + t - tt - 2s + 2stt" onclick="operate(this.value);"></li>
+    <li> A reflection: <input type="button" value="s" onclick="operate(this.value);"></li>
+    <li> A rotation: <input type="button" value="t" onclick="operate(this.value);"></li>
+    <li> A non-trivial involution: <input type="button" value="-t + tt - s + st +stt" onclick="operate(this.value);"> (aka Taussky's unit)</li>
+    <li> A bibcyclic unit: <input type="button" value="e+t-tt+st-stt" onclick="operate(this.value);"> and its inverse <input type="button" value="e-t+tt-st+stt" onclick="operate(this.value);"></li>
+    <li> Another bibcyclic unit: <input type="button" value="e+t-tt-s+stt" onclick="operate(this.value);"> and its inverse <input type="button" value="e-t+tt+s-stt" onclick="operate(this.value);"></li>
   </ul>
   <h3>History</h3>
-  <ul id="history"></ul>
+  <ol id="history" class="clearfix"></ol>
+	<h1>Description</h1>
+  <p>The symmetric group \(S_3\) acting on three elements is the symmetry group of the equilateral triangle, fixing the center of this triangle. Extending this action linearly on the integral group ring \(\mathbb{Z}S_3\) we obtain an action on the hexagonal lattice spanned by this triangle. This description was used in <a href = "http://www.math.ualberta.ca/people/Faculty/Sehgal/publications/086.pdf" target="_blank">an article by Marciniak and Sehgal</a> to describe the unit group of \(\mathbb{Z}S_3\) explicitly. See also <a href="http://www.igt.uni-stuttgart.de/LstDiffgeo/Hertweck/preprints/ZS3_MaSe.pdf" target="_blank">an article of Hertweck</a> where the same is described and illustrated in more detail.</p>
 
-  <h1>Description</h1>
-  <p>To be done</p>
+<p>The action of \(\mathbb{Z}S_3\) on this lattice can be used to give an elegant and explicit description of the unit group of \(\mathbb{Z}S_3\) - something which is very comlicated to achieve in general for integral group rings.</p>
   <script>
     var canvas = document.getElementById("lattice");
     var textContainer = document.getElementById("latticeText");
@@ -82,7 +96,7 @@
 
       var entry = document.createElement("li");
       entry.innerHTML = '<input type="button" value="' + text + '" onclick="operate(this.value);">';
-      historyContainer.insertAdjacentElement('afterbegin', entry);
+      historyContainer.appendChild(entry);
     }
 
     function operate(input) {
