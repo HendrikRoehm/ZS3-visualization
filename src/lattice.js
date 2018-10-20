@@ -8,6 +8,9 @@
  *   gap: Distance between points
  *   animationSpeed: speed of the transformation animation
  */
+
+import Point from "./point.js";
+
 export default function Lattice(canvas, options) {
   options = options || {};
   var context = canvas.getContext('2d');            
@@ -35,6 +38,7 @@ export default function Lattice(canvas, options) {
     st: [1/2, -Math.sqrt(3)/2, -Math.sqrt(3)/2, -1/2],
     stt: [1/2, Math.sqrt(3)/2, Math.sqrt(3)/2, -1/2]
   };
+  var triangle = [];
 
   var requestAnimationFrame = window.requestAnimationFrame
     || window.mozRequestAnimationFrame
@@ -45,50 +49,34 @@ export default function Lattice(canvas, options) {
 
   function initializePoints() {
     points = [];
+    triangle = [];
     for (var i=-pointsPerDirection/2; i<pointsPerDirection/2; i++) {
       for (var j=-pointsPerDirection/2; j<pointsPerDirection/2; j++) {
-        var isCenter = i == 0 && j == 0;
         var x = (i+(j % 2)/2)*gap + center.x;
         var y = Math.sqrt(3)/2*j*gap + center.y;
-        var size = isCenter ? 6 : 4;
-        var fill = "black";
-        var edge = false;
+        var point = new Point(x, y);
+        var isCenter = i == 0 && j == 0;
+        point.setSize(isCenter ? 6 : 4);
+
         if (j == -2 && i == 0) {
-          fill = "red";
-          edge = true;
+          point.setFillStyle("red");
+          triangle.push(point);
         } else if (j == 1 && i == -2) {
-          fill = "green";
-          edge = true;
+          point.setFillStyle("green");
+          triangle.push(point);
         } else if (j == 1 && i == 1) {
-          fill = "blue";
-          edge = true;
+          point.setFillStyle("blue");
+          triangle.push(point);
         }
-        points.push({
-          xOld: x,
-          yOld: y,
-          x: x,
-          y: y,
-          size: size,
-          edge: edge,
-          fill: fill
-        });
+        points.push(point);
       }
     }
   }
 
   // transforms points without animation or redraw
   function transformWith(matrix) {
-    var a11 = matrix[0];
-    var a12 = matrix[1];
-    var a21 = matrix[2];
-    var a22 = matrix[3];
-    points.forEach(function (p) {
-      var xNew = a11*(p.x-center.x) + a21 * (p.y-center.y) + center.x;
-      var yNew = a12*(p.x-center.x) + a22 * (p.y-center.y) + center.y;
-      p.xOld = p.x;
-      p.yOld = p.y;
-      p.x = xNew;
-      p.y = yNew;
+    points.forEach(function (point) {
+      point.transformWithMatrixAroundCenter(matrix, center);
     })
   }
 
@@ -117,18 +105,13 @@ export default function Lattice(canvas, options) {
     // draw edges
     var firstEdge = true;
     context.beginPath();
-    points.forEach(function (p) {
-      var x = transitionRatio*p.x + (1-transitionRatio)*p.xOld;
-      var y = transitionRatio*p.y + (1-transitionRatio)*p.yOld;
-      if (!p.edge) {
-        return;
-      }
-
+    triangle.forEach(function (point) {
+      var coordinates = point.coordinatesDuringTransition();
       if (firstEdge) {
-        context.moveTo(x, y);
+        context.moveTo(coordinates.x, coordinates.y);
         firstEdge = false;
       } else {
-        context.lineTo(x, y);
+        context.lineTo(coordinates.x, coordinates.y);
       }
     });
     context.closePath();
@@ -137,14 +120,9 @@ export default function Lattice(canvas, options) {
     context.stroke();
 
     // draw points
-    var edges = [];
-    points.forEach(function (p) {
-      var x = transitionRatio*p.x + (1-transitionRatio)*p.xOld;
-      var y = transitionRatio*p.y + (1-transitionRatio)*p.yOld;
-      context.beginPath();
-      context.arc(x, y, p.size, 0, 2 * Math.PI, false);
-      context.fillStyle = p.fill ? p.fill : "black";
-      context.fill();
+    points.forEach(function (point) {
+      point.setTransitionRatio(transitionRatio);
+      point.drawOnContext(context);
     });
   }
 
