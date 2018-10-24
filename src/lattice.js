@@ -12,6 +12,7 @@
 import Point from "./point.js";
 
 export default function Lattice(canvas, options) {
+  this.transitionProgress = 1;
   options = options || {};
   var context = canvas.getContext('2d');            
   var width = canvas.width;
@@ -52,24 +53,29 @@ export default function Lattice(canvas, options) {
     triangle = [];
     for (var i=-pointsPerDirection/2; i<pointsPerDirection/2; i++) {
       for (var j=-pointsPerDirection/2; j<pointsPerDirection/2; j++) {
-        var x = (i+(j % 2)/2)*gap + center.x;
-        var y = Math.sqrt(3)/2*j*gap + center.y;
-        var point = new Point(x, y);
-        var isCenter = i == 0 && j == 0;
-        point.setSize(isCenter ? 6 : 4);
-
-        if (j == -2 && i == 0) {
-          point.setFillStyle("red");
-          triangle.push(point);
-        } else if (j == 1 && i == -2) {
-          point.setFillStyle("green");
-          triangle.push(point);
-        } else if (j == 1 && i == 1) {
-          point.setFillStyle("blue");
-          triangle.push(point);
-        }
+        var point = getInitializedPoint(i, j);
         points.push(point);
       }
+    }
+
+    function getInitializedPoint(i, j) {
+      var x = (i+(j % 2)/2)*gap + center.x;
+      var y = Math.sqrt(3)/2*j*gap + center.y;
+      var point = new Point(x, y);
+      var isCenter = i == 0 && j == 0;
+      point.setSize(isCenter ? 6 : 4);
+
+      if (j == -2 && i == 0) {
+        point.setFillStyle("red");
+        triangle.push(point);
+      } else if (j == 1 && i == -2) {
+        point.setFillStyle("green");
+        triangle.push(point);
+      } else if (j == 1 && i == 1) {
+        point.setFillStyle("blue");
+        triangle.push(point);
+      }
+      return point;
     }
   }
 
@@ -94,8 +100,9 @@ export default function Lattice(canvas, options) {
   }
   
   // renders the points onto the canvas
-  // transitionRatio gives the advance of the animation (between 0 and 1)
-  function render(transitionRatio) {
+  this.render = function() {
+    var transitionProgress = this.transitionProgress;
+
     // draw background
     context.beginPath();
     context.rect(0, 0, width, height);
@@ -121,33 +128,25 @@ export default function Lattice(canvas, options) {
 
     // draw points
     points.forEach(function (point) {
-      point.setTransitionRatio(transitionRatio);
+      point.setTransitionProgress(transitionProgress);
       point.drawOnContext(context);
     });
   }
 
-  var startTime;
-  // renders one frame and triggers the next animation frame
-  function animationFrame() {
-    var time = Date.now();
-    var elapsed = Math.min(1, animationSpeed*(time-startTime)/1000);
-    render(elapsed);
-    if (elapsed < 1) {
-      requestAnimationFrame(animationFrame);
-    }
+  this.setTransitionProgress = function(transitionProgress) {
+    this.transitionProgress = transitionProgress;
   }
 
   // operates on lattice with coeff
   // options: duration
   this.operateWith = function(coeff, options) {
     transformWith(matrixFrom(coeff));
-    startTime = Date.now();
-    animationFrame();
   }
 
   this.reset = function() {
     initializePoints();
-    render(1);
+    this.transitionProgress = 1;
+    this.render();
   }
 
   // initialization

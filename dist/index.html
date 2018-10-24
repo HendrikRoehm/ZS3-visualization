@@ -71,9 +71,9 @@
     var errorContainer = document.getElementById("error");
     var lattice = new Lattice(canvas, {
       gap: 30,
-      pointsPerDirection: 50,
-      animationSpeed: 1
+      pointsPerDirection: 50
     });
+    var latticeAnimator = new LatticeAnimator(lattice);
 
     function historyAdd(coeff) {
       var text = "";
@@ -116,6 +116,7 @@
       } else {
         historyAdd(coeff);
         lattice.operateWith(coeff);
+        latticeAnimator.animate();
         inputContainer.value = "";
       }
     }

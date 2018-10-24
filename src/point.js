@@ -10,11 +10,11 @@ var Point = function (x, y) {
   }
   this.size = 1;
   this.fillStyle = "black";
-  this.transitionRatio = 1;
+  this.transitionProgress = 1;
 }
 
-Point.prototype.setTransitionRatio = function (transitionRatio) {
-  this.transitionRatio = transitionRatio;
+Point.prototype.setTransitionProgress = function (transitionProgress) {
+  this.transitionProgress = transitionProgress;
 }
 
 Point.prototype.setFillStyle = function (fillStyle) {
@@ -27,10 +27,10 @@ Point.prototype.setSize = function (size) {
 
 Point.prototype.coordinatesDuringTransition = function () {
   return {
-    x: this.transitionRatio*this.currentCoordinates.x
-      + (1-this.transitionRatio)*this.lastCoordinates.x,
-    y: this.transitionRatio*this.currentCoordinates.y
-      + (1-this.transitionRatio)*this.lastCoordinates.y
+    x: this.transitionProgress*this.currentCoordinates.x
+      + (1-this.transitionProgress)*this.lastCoordinates.x,
+    y: this.transitionProgress*this.currentCoordinates.y
+      + (1-this.transitionProgress)*this.lastCoordinates.y
   };
 }
 
