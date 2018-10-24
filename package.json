@@ -1,6 +1,6 @@
 {
   "name": "zs3-visualization",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Visualization of the ZS3 operation on a lattice",
   "main": "src/lattice.js",
   "scripts": {
